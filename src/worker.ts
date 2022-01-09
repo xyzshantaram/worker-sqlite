@@ -23,7 +23,7 @@ const handleMessage = (contents: WorkerMessage) => {
             catch (e) {
                 message = `err: ${e}`;
             }
-
+            console.log(message);
             dis.postMessage({ type: 'InitResponse', message });
             break;
         }
@@ -52,6 +52,12 @@ const handleMessage = (contents: WorkerMessage) => {
             }
 
             dis.postMessage({ type: 'ExecutionResponse', id: contents.data.id, message });
+            break;
+        }
+
+        case 'close': {
+            db.close();
+            dis.postMessage({ type: 'Closed' });
             break;
         }
 
