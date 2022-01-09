@@ -23,7 +23,7 @@ const handleMessage = (contents: WorkerMessage) => {
             catch (e) {
                 message = `err: ${e}`;
             }
-            console.log(message);
+
             dis.postMessage({ type: 'InitResponse', message });
             break;
         }
