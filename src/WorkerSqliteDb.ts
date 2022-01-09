@@ -8,8 +8,8 @@ interface StoredPromise {
 }
 
 export class WorkerSqliteDb {
-    worker: Worker;
-    pendingQueries: Record<string, StoredPromise> = {};
+    private worker: Worker;
+    private pendingQueries: Record<string, StoredPromise> = {};
     closed = false;
 
     constructor(path: string) {
