@@ -1,9 +1,11 @@
 /**
- * Example demonstrating the basic usage of WorkerSqliteDb.
+ * Same as examples/1.ts, but uses the `sqlite3` module as its storage backend.
  */
 import { WorkerSqliteDb } from '../mod.ts';
 
-const db = new WorkerSqliteDb('./example-1.db');
+const db = new WorkerSqliteDb('./example-2.db', {
+    backend: 'sqlite3'
+});
 
 // set up the db
 await db.execute('drop table if exists testing');

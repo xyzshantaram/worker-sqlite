@@ -8,7 +8,7 @@ async operation.
 Import with
 
 ```ts
-import { WorkerSqliteDb } from "https://deno.land/x/worker_sqlite@0.1.0";
+import { WorkerSqliteDb } from "https://deno.land/x/worker_sqlite@0.1.0/mod.ts";
 ```
 
 Then create DB object, execute and query things!

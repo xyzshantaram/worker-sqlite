@@ -7,13 +7,23 @@ interface StoredPromise {
     reject: (err: any) => void;
 }
 
+export interface WorkerSqliteOptions {
+    /**
+     * The database library to use in the worker.
+     * * `xsqlite` selects the `x/sqlite` module.
+     * * `sqlite3` selects the `sqlite3` module, and enables WAL mode.
+     */
+    backend?: 'xsqlite' | 'sqlite3'
+}
+
 export class WorkerSqliteDb {
     private worker: Worker;
     private pendingQueries: Record<string, StoredPromise> = {};
     closed = false;
 
-    constructor(path: string) {
-        const url = new URL("./worker.ts", import.meta.url);
+    constructor(path: string, options?: WorkerSqliteOptions) {
+        const workerPath = `${(options?.backend || 'xsqlite')}_worker.ts`;
+        const url = new URL(workerPath, import.meta.url);
         this.worker = new Worker(url.href, {
             type: "module",
             deno: {
