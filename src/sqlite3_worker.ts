@@ -1,4 +1,4 @@
-import { Database } from './deps.ts';
+import { Database } from "https://deno.land/x/sqlite3@0.6.1/mod.ts";
 import { WorkerMessage } from "./types.ts";
 
 const dis = self as unknown as Worker;
@@ -10,6 +10,8 @@ dis.onmessage = (e: MessageEvent<WorkerMessage>) => {
     handleMessage(e.data);
 };
 
+console.warn('This library currently doesn\'t work with sqlite3. Apologies.');
+
 const handleMessage = (contents: WorkerMessage) => {
     switch (contents.type) {
         case 'init': {
@@ -19,7 +21,7 @@ const handleMessage = (contents: WorkerMessage) => {
 
             try {
                 db = new Database(contents.data.path!);
-                db.execute('pragma journal_mode = wal');
+                db.exec('pragma journal_mode = wal');
             }
             catch (e) {
                 message = `err: ${e}`;
@@ -34,7 +36,7 @@ const handleMessage = (contents: WorkerMessage) => {
             let value = null;
             let message = undefined;
             try {
-                value = db.queryObject(contents.data.query!, ...contents.data.params);
+                value = db.prepare(contents.data.query!).all(...contents.data.params!);
             }
             catch (e) {
                 message = `${e}`;
@@ -48,7 +50,7 @@ const handleMessage = (contents: WorkerMessage) => {
             contents.data.params = contents.data.params || [];
             let message = 'ok';
             try {
-                db.execute(contents.data.query!, ...contents.data.params);
+                db.prepare(contents.data.query!).run(...contents.data.params);
             }
             catch (e) {
                 console.log('here');
