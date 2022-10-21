@@ -1,4 +1,4 @@
-import { DB } from './deps.ts';
+import { DB } from "https://deno.land/x/sqlite@v3.2.0/mod.ts";
 import { WorkerMessage } from "./types.ts";
 
 const dis = self as unknown as Worker;
