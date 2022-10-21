@@ -27,7 +27,6 @@ export class WorkerSqliteDb {
         this.worker = new Worker(url.href, {
             type: "module",
             deno: {
-                namespace: true,
                 permissions: {
                     read: true,
                     write: true
@@ -59,7 +58,7 @@ export class WorkerSqliteDb {
                 }
                 case "InitResponse":
                     if (contents.message !== 'ok') {
-                        throw new Error('Could not initialise worker!');
+                        throw new Error(`Could not initialise worker! Details: ${contents.message}`);
                     }
                     break;
                 case "ExecutionResponse": {
