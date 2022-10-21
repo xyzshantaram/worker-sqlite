@@ -26,12 +26,6 @@ export class WorkerSqliteDb {
         const url = new URL(workerPath, import.meta.url);
         this.worker = new Worker(url.href, {
             type: "module",
-            deno: {
-                permissions: {
-                    read: true,
-                    write: true
-                }
-            }
         });
 
         this.worker.postMessage({
