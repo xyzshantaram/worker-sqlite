@@ -10,7 +10,7 @@ dis.onmessage = (e: MessageEvent<WorkerMessage>) => {
     handleMessage(e.data);
 };
 
-throw new Error('worker-sqlite currently doesn\'t work with sqlite3. Apologies.');
+throw new Error('worker-sqlite currently doesn\'t work with sqlite3, due to issues with running in a Worker. If anyone has any tips on this, feel free to open a GitHub issue.');
 
 const handleMessage = (contents: WorkerMessage) => {
     switch (contents.type) {
